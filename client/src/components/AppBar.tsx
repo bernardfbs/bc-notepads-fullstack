@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { LinkButton } from "./LinkButton";
 import { DarkModeToggle } from "./DarkModeToggle";
-import { MdStickyNote2 as LogoIcon } from "react-icons/md";
 import { BiAddToQueue as LogoNewNotepad } from "react-icons/bi";
 import { AiOutlineHome as LogoHome } from "react-icons/ai";
 import { AiOutlineFileText as LogoList } from "react-icons/ai";

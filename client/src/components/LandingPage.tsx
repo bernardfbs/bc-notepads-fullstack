@@ -1,4 +1,3 @@
-import { Button } from "./Button";
 import { BiNotepad } from "react-icons/bi";
 
 export function FormLandingPage() {

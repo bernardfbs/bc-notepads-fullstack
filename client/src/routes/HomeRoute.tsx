@@ -1,10 +1,17 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
 import { api } from "../api";
 import { Card } from "../components/Card";
 
-const initialNotepads = [];
+interface Notepad {
+  id: number;
+  title: string;
+  subtitle: string;
+  createdAt: string; // Ou ajuste para o tipo de data apropriado
+}
+
+const initialNotepads: Notepad[] = [];
 const initialLoading = true;
 
 export function HomeRoute() {
