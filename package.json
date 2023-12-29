@@ -1,0 +1,22 @@
+{
+  "name": "bc-notepads-fullstack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bernardfbs/bc-notepads-fullstack.git"
+  },
+  "author": "bernardfbs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bernardfbs/bc-notepads-fullstack/issues"
+  },
+  "homepage": "https://github.com/bernardfbs/bc-notepads-fullstack#readme",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
