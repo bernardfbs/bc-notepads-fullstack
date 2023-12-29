@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { MdArrowRight } from "react-icons/md";
 
 type BreadcrumbsProps = {
   links: {
@@ -14,13 +15,11 @@ export function Breadcrumbs({ links }: BreadcrumbsProps) {
         <div key={index} className="flex items-center gap-1">
           <Link
             to={link.href}
-            className="text-blue-400 hover:text-blue-600 hover:underline"
+            className="text-blue-400 hover:text-blue-700 hover:underline"
           >
             {link.label}
           </Link>
-          {index < links.length - 1 && (
-            <span className="font-bold text-md">{">"}</span>
-          )}
+          {index < links.length - 1 && <MdArrowRight className="text-lg" />}
         </div>
       ))}
     </div>

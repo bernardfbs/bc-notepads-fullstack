@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import toast from "react-simple-toasts";
-import { Helmet } from "react-helmet";
 import { api } from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "../components/Card";
@@ -31,22 +30,19 @@ export function ViewNotepadRoute() {
   async function deleteNotepad() {
     const response = await api.delete(`/notepads/${params.id}`);
     if (response.data.id === true) {
-      toast(`O notepad #${notepad.id} foi deletado com sucesso!`);
+      toast(`O notepad #${notepad.id} foi deletado com sucesso`);
       navigate("/");
     } else {
-      toast("Houve um erro ao deletar o notepad");
+      toast("Houve um erro ao deletar");
     }
   }
 
   useEffect(() => {
     loadNotepad();
-  }, [params.id]);
+  }, []);
 
   return (
     <Card>
-      <Helmet>
-        <title>{notepad.title}</title>
-      </Helmet>
       <Breadcrumbs
         links={[
           { href: "/", label: "Home" },
@@ -56,8 +52,8 @@ export function ViewNotepadRoute() {
           },
         ]}
       />
-      <div className="flex gap-2">
-        <Button className="bg-red-500 hover:bg-red-700" onClick={deleteNotepad}>
+      <div className="flex gap-3 justify-end">
+        <Button className="bg-red-500 hover:bg-red-600" onClick={deleteNotepad}>
           Deletar
         </Button>
         <LinkButton
@@ -67,10 +63,9 @@ export function ViewNotepadRoute() {
           Editar
         </LinkButton>
       </div>
-      <div className="text-gray-500 mb-2">#{notepad.id}</div>
-      <div className="text-gray-500">
-        {new Date(notepad.createdAt).toLocaleDateString()}
-      </div>
+
+      <span className="text-gray-400 mb-2">#{notepad.id}</span>
+      <div>{new Date(notepad.createdAt).toLocaleDateString()}</div>
       <Title>{notepad.title}</Title>
       <p className="mb-4 text-gray-500">{notepad.subtitle}</p>
       <p>{notepad.content}</p>

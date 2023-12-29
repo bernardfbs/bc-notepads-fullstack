@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useZorm } from "react-zorm";
-import toast from "react-simple-toasts";
-import { Helmet } from "react-helmet";
 import { Button } from "../components/Button";
+import toast from "react-simple-toasts";
 import { ErrorMessage } from "../components/ErrorMessage";
 import { Breadcrumbs } from "../components/Breadcrumbs";
-import { Card } from "../components/Card";
 import { api } from "../api";
 import { NotepadSchema } from "../notepadSchema";
+import { Card } from "../components/Card";
 
 export function CreateNotepadRoute() {
   const navigate = useNavigate();
@@ -16,71 +15,71 @@ export function CreateNotepadRoute() {
       event.preventDefault();
       const response = await api.post("/notepads", event.data);
       if (response.data.id) {
-        toast("Seu notepad foi criado com sucesso!");
+        toast("Parabéns! Seu notepad foi gerado");
         navigate("/");
-      } else {
-        toast("Houve um erro ao criar o seu notepad. :(");
-      }
+      } else toast("Ops! Houve um erro ao gerar seu notepad");
     },
   });
 
   return (
     <Card>
-      <Helmet>
-        <title>Criar notepad</title>
-      </Helmet>
-      <Breadcrumbs
-        links={[
-          { href: "/", label: "Home" },
-          {
-            href: "/criar-notepad",
-            label: "Criar notepad",
-          },
-        ]}
-      />
-      <form ref={zo.ref} className="flex flex-col gap-2">
-        <h1 className="text-center font-bold text-2xl">Criar notepad</h1>
-        <div className="flex flex-col">
-          <input
-            type="text"
-            placeholder="Digite o título"
-            className={`rounded-lg px-2 py-1 border focus:border-green-500 outline-none w-full ${zo.errors.title(
-              "border-red-500 focus:border-red-600"
-            )}`}
-            name={zo.fields.title()}
-          />
-          {zo.errors.title((error) => (
-            <ErrorMessage>{error.message}</ErrorMessage>
-          ))}
-        </div>
-        <div className="flex flex-col">
-          <input
-            type="text"
-            placeholder="Digite o subtítulo"
-            name={zo.fields.subtitle()}
-            className={`rounded-lg px-2 py-1 border focus:border-green-500 outline-none w-full ${zo.errors.subtitle(
-              "border-red-500 focus:border-red-600"
-            )}`}
-          />
-          {zo.errors.subtitle((error) => (
-            <ErrorMessage>{error.message}</ErrorMessage>
-          ))}
-        </div>
-        <div className="flex flex-col">
-          <textarea
-            placeholder="Digite o conteúdo"
-            rows={3}
-            name={zo.fields.content()}
-            className={`rounded-lg px-2 py-1 border focus:border-green-500 outline-none resize-none w-full ${zo.errors.content(
-              "border-red-500 focus:border-red-600"
-            )}`}
-          />
-          {zo.errors.content((error) => (
-            <ErrorMessage>{error.message}</ErrorMessage>
-          ))}
-        </div>
-        <Button type="submit">Enviar</Button>
-      </form>
+      <div>
+        <Breadcrumbs
+          links={[
+            { href: "/", label: "Home" },
+            {
+              href: "/criar-notepad",
+              label: "Criar notepad",
+            },
+          ]}
+        />
+        <form
+          ref={zo.ref}
+          className="flex flex-col gap-4 m-2 md:max-w-screen-md md:mx-auto"
+        >
+          <h1 className="text-center font-bold text-2xl">Novo Notepad</h1>
+          <div className="flex flex-col gap-1">
+            <input
+              type="text"
+              placeholder="Digite aqui o título"
+              className={`rounded-lg px-2 py-1 border focus:border-green-500 outline-none w-full ${zo.errors.title(
+                "border-red-600"
+              )}`}
+              name={zo.fields.title()}
+            ></input>
+            {zo.errors.title((error) => (
+              <ErrorMessage>{error.message}</ErrorMessage>
+            ))}
+          </div>
+          <div className="flex flex-col gap-1">
+            <input
+              type="text"
+              placeholder="Digite aqui o subtítulo"
+              className={`rounded-lg px-2 py-1 border focus:border-green-500 outline-none w-full ${zo.errors.subtitle(
+                "border-red-600"
+              )}`}
+              name={zo.fields.subtitle()}
+            ></input>
+            {zo.errors.subtitle((error) => (
+              <ErrorMessage>{error.message}</ErrorMessage>
+            ))}
+          </div>
+          <div className="flex flex-col gap-1">
+            <textarea
+              placeholder="Digite aqui o conteúdo"
+              className={`rounded-lg px-2 py-1 border focus:border-green-500 outline-none w-full ${zo.errors.content(
+                "border-red-600"
+              )}`}
+              rows={3}
+              name={zo.fields.content()}
+            ></textarea>
+            {zo.errors.content((error) => (
+              <ErrorMessage>{error.message}</ErrorMessage>
+            ))}
+          </div>
+          <Button type="submit">Enviar</Button>
+        </form>
+      </div>
     </Card>
   );
 }

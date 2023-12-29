@@ -1,13 +1,13 @@
 type TextFieldProps = {
-  textoPadrao: string;
-  valor: string;
+  placeholder: string;
+  value: string;
 };
 
-export function TextField({ textoPadrao, valor }: TextFieldProps) {
+export function TextField({ placeholder, value }: TextFieldProps) {
   return (
     <input
-      placeholder={textoPadrao}
-      value={valor}
+      placeholder={placeholder}
+      value={value}
       type="text"
       className="border rounded-lg outline-none focus:border-green-500 py-1 px-2"
     />

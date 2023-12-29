@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-simple-toasts";
 import { useZorm } from "react-zorm";
-import { Helmet } from "react-helmet";
 import { Title } from "../components/Title";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
@@ -18,7 +17,7 @@ const texts = {
   contentPlaceholder: "Digite o conteúdo",
   submit: "Enviar",
   submitSuccess: "Seu notepad foi editado com sucesso!",
-  submitFailure: "Houve um erro ao editar o seu notepad. :(",
+  submitFailure: "Houve um erro ao editar o seu notepad",
 };
 
 const initialNotepad = {
@@ -57,9 +56,6 @@ export function EditNotepadRoute() {
 
   return (
     <Card>
-      <Helmet>
-        <title>Editar notepad #{params.id}</title>
-      </Helmet>
       <Breadcrumbs
         links={[
           { href: "/", label: "Home" },
@@ -84,7 +80,7 @@ export function EditNotepadRoute() {
             placeholder={texts.titlePlaceholder}
             name={zo.fields.title()}
             defaultValue={initialFormState.title}
-          />
+          ></input>
           {zo.errors.title((error) => (
             <ErrorMessage>{error.message}</ErrorMessage>
           ))}
@@ -96,7 +92,7 @@ export function EditNotepadRoute() {
             placeholder={texts.subtitlePlaceholder}
             name={zo.fields.subtitle()}
             defaultValue={initialFormState.subtitle}
-          />
+          ></input>
           {zo.errors.subtitle((error) => (
             <ErrorMessage>{error.message}</ErrorMessage>
           ))}
@@ -107,7 +103,7 @@ export function EditNotepadRoute() {
             placeholder={texts.contentPlaceholder}
             name={zo.fields.content()}
             defaultValue={initialFormState.content}
-          />
+          ></textarea>
           {zo.errors.content((error) => (
             <ErrorMessage>{error.message}</ErrorMessage>
           ))}
