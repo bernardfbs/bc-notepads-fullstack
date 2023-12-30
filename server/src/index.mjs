@@ -18,6 +18,7 @@ function handleErrorMiddleware(err, req, res, next) {
   throw err;
 }
 
+app.use(cors());
 app.use(express.json());
 app.use("/notepads", notepadController);
 app.use(handleErrorMiddleware);

@@ -5,10 +5,11 @@ import { api } from "../api";
 import { Card } from "../components/Card";
 
 interface Notepad {
-  id: number;
-  title: string;
-  subtitle: string;
-  createdAt: string; // Ou ajuste para o tipo de data apropriado
+  id: 0;
+  title: "";
+  subtitle: "";
+  content: "";
+  created_at: ""; // Ou ajuste para o tipo de data apropriado
 }
 
 const initialNotepads: Notepad[] = [];
@@ -50,7 +51,7 @@ export function HomeRoute() {
               className="border-b py-2 cursor-pointer block"
             >
               <span className="text-sm text-gray-500">
-                {new Date(notepad.createdAt).toLocaleDateString()}
+                {new Date(notepad.created_at).toLocaleDateString()}
               </span>
               <h2 className="text-lg font-bold leading-tight pb-2">
                 {notepad.title}

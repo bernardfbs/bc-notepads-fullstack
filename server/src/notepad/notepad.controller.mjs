@@ -6,7 +6,7 @@ import { updateNotepadSchema } from "./schemas/update-notepad.schema.mjs";
 export const notepadController = express.Router();
 
 notepadController.get("/", async (req, res) => {
-  const limit = Number(req.query.limit) || 30;
+  const limit = Number(req.query.limit) || 50;
   const offset = Number(req.query.offset) || 0;
   const notepads = await notepadService.listNotepads({ limit, offset });
   res.status(200).json(notepads);
@@ -31,10 +31,10 @@ notepadController.delete("/:id", async (req, res) => {
   res.status(200).json(notepad);
 });
 
-notepadController.patch("/:id", async (req, res) => {
-  const partialNotepad = req.body;
-  await updateNotepadSchema.parseAsync(partialNotepad);
+notepadController.put("/:id", async (req, res) => {
+  const notepadData = req.body;
+  await updateNotepadSchema.parseAsync(notepadData);
   const notepadId = req.params.id;
-  const notepad = await notepadService.updateNotepad(notepadId, partialNotepad);
+  const notepad = await notepadService.updateNotepad(notepadId, notepadData);
   res.status(200).json(notepad);
 });

@@ -13,7 +13,7 @@ const initialNotepad = {
   title: "",
   subtitle: "",
   content: "",
-  createdAt: "",
+  created_at: "",
 };
 
 export function ViewNotepadRoute() {
@@ -29,7 +29,7 @@ export function ViewNotepadRoute() {
 
   async function deleteNotepad() {
     const response = await api.delete(`/notepads/${params.id}`);
-    if (response.data.id === true) {
+    if (response.data.id) {
       toast(`O notepad #${notepad.id} foi deletado com sucesso`);
       navigate("/");
     } else {
@@ -65,7 +65,7 @@ export function ViewNotepadRoute() {
       </div>
 
       <span className="text-gray-400 mb-2">#{notepad.id}</span>
-      <div>{new Date(notepad.createdAt).toLocaleDateString()}</div>
+      <div>{new Date(notepad.created_at).toLocaleDateString()}</div>
       <Title>{notepad.title}</Title>
       <p className="mb-4 text-gray-500">{notepad.subtitle}</p>
       <p>{notepad.content}</p>
