@@ -1,63 +1,97 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
-import { api } from "../api";
+import { Helmet } from "react-helmet";
+import { LinkButton } from "../components/LinkButton";
 import { Card } from "../components/Card";
+import { api } from "../api";
+
+const pageSize = 30;
 
 interface Post {
-  id: 0;
-  title: "";
-  subtitle: "";
-  content: "";
-  created_at: ""; // Ou ajuste para o tipo de data apropriado
+  id: number;
+  user_id: number;
+  user_avatar: string;  // Adicione esta linha
+  user_first_name: string;
+  user_last_name: string;
+  created_at: string;
+  content: string;
+  // ... outras propriedades necessárias
 }
+const initialPostsList = {
+  count: 0,
+  posts: [],
+};
 
-const initialPosts: Post[] = [];
+
 const initialLoading = true;
-
 export function HomeRoute() {
-  const [posts, setPosts] = useState(initialPosts);
+  const [postsList, setPostsList] = useState(initialPostsList);
   const [loading, setLoading] = useState(initialLoading);
-
+  const pageCount = Math.ceil(postsList.count / pageSize);
+  const pages = new Array(pageCount).fill(null).map((_, index) => index + 1);
   async function loadPosts() {
     const response = await api.get("/posts");
-    const nextPosts = response.data.posts;
-    setPosts(nextPosts);
+    const nextPosts = response.data;
+    setPostsList(nextPosts);
   }
-
   useEffect(() => {
     loadPosts();
   }, []);
-
   useEffect(() => {
-    if (posts.length > 0) {
+    if (postsList.posts.length > 0) {
       setLoading(false);
     }
-  }, [posts]);
-
+  }, [postsList]);
   return (
-    <>
+    <Card>
+      <Helmet>
+        <title>Home | Orkut</title>
+      </Helmet>
       {loading && (
         <div className="flex justify-center">
-          <FaSpinner className="text -4xl animate-spin" />
+          <FaSpinner className="text-4xl animate-spin" />
         </div>
       )}
-      {posts.map((post) => {
+      {postsList.posts.map((post) => {
         return (
-          <Card>
-            <Link
-              to={`/ver-publicacao/${post.id}`}
-              key={post.id}
-              className="border-b py-2 cursor-pointer block"
-            >
+          <div key={post.id} className="border-b py-2">
+          <div className="flex items-center gap-2">
+            <Link to={`/perfil/${post.user_id}`}>
+              <img
+                src={post.user_avatar}
+                alt={`Foto de ${post.user_first_name} ${post.user_last_name}`}
+                className="w-[48px] h-[48px] rounded-full"
+              />
+            </Link>
+            <div className="flex flex-col">
+              <Link
+                to={`/perfil/${post.user_id}`}
+                className="text-blue-600 hover:text-blue-800 hover:underline font-bold"
+              >
+                {post.user_first_name} {post.user_last_name}
+              </Link>
               <span className="text-sm text-gray-500">
                 {new Date(post.created_at).toLocaleDateString()}
               </span>
-              <p>{post.content}</p>
-            </Link>
-          </Card>
-        );
-      })}
-    </>
-  );
+            </div>
+          </div>
+          <Link
+            to={`/ver-publicacao/${post.id}`}
+            className="cursor-pointer block"
+          >
+            <p>{post.content}</p>
+          </Link>
+        </div>
+      );
+    })}
+    <div className="flex flex-row gap-2 flex-wrap pt-4">
+      {pages.map((page) => (
+        <LinkButton key={page} to={`/publicacoes/${page}`}>
+          {page}
+        </LinkButton>
+      ))}
+    </div>
+  </Card>
+);
 }
