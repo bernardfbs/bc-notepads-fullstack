@@ -13,11 +13,11 @@ export function AppBar() {
         </Link>
       </div>
       <div>
-        <Link to="/criar-notepad">
+        <Link to="/criar-publicacao">
           <LogoNewNotepad className="text-4xl"></LogoNewNotepad>
         </Link>
       </div>
-      <Link to="/home-notepad">
+      <Link to="/home-post">
         <LogoList className="text-4xl"></LogoList>
       </Link>
       <DarkModeToggle></DarkModeToggle>

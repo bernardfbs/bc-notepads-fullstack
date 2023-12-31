@@ -3,12 +3,11 @@ import toast from "react-simple-toasts";
 import { api } from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "../components/Card";
-import { Title } from "../components/Title";
 import { Button } from "../components/Button";
 import { LinkButton } from "../components/LinkButton";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 
-const initialNotepad = {
+const initialPost = {
   id: 0,
   title: "",
   subtitle: "",
@@ -16,21 +15,21 @@ const initialNotepad = {
   created_at: "",
 };
 
-export function ViewNotepadRoute() {
+export function ViewPostRoute() {
   const params = useParams();
   const navigate = useNavigate();
-  const [notepad, setNotepad] = useState(initialNotepad);
+  const [post, setPost] = useState(initialPost);
 
-  async function loadNotepad() {
-    const response = await api.get(`/notepads/${params.id}`);
-    const nextNotepad = response.data;
-    setNotepad(nextNotepad);
+  async function loadPost() {
+    const response = await api.get(`/posts/${params.id}`);
+    const nextPost = response.data;
+    setPost(nextPost);
   }
 
-  async function deleteNotepad() {
-    const response = await api.delete(`/notepads/${params.id}`);
+  async function deletePost() {
+    const response = await api.delete(`/posts/${params.id}`);
     if (response.data.id) {
-      toast(`O notepad #${notepad.id} foi deletado com sucesso`);
+      toast(`O post #${post.id} foi deletado com sucesso`);
       navigate("/");
     } else {
       toast("Houve um erro ao deletar");
@@ -38,37 +37,36 @@ export function ViewNotepadRoute() {
   }
 
   useEffect(() => {
-    loadNotepad();
+    loadPost();
   }, []);
 
   return (
     <Card>
+      <title>Ver publicação #{post.id}</title>
       <Breadcrumbs
         links={[
           { href: "/", label: "Home" },
           {
-            href: `/ver-notepad/${params.id}`,
-            label: `Ver notepad #${params.id}`,
+            href: `/ver-publicacao/${params.id}`,
+            label: `Ver post #${params.id}`,
           },
         ]}
       />
       <div className="flex gap-3 justify-end">
-        <Button className="bg-red-500 hover:bg-red-600" onClick={deleteNotepad}>
+        <Button className="bg-red-500 hover:bg-red-600" onClick={deletePost}>
           Deletar
         </Button>
         <LinkButton
           className="bg-amber-500 hover:bg-amber-700"
-          to={`/editar-notepad/${params.id}`}
+          to={`/editar-publicacao/${params.id}`}
         >
           Editar
         </LinkButton>
       </div>
 
-      <span className="text-gray-400 mb-2">#{notepad.id}</span>
-      <div>{new Date(notepad.created_at).toLocaleDateString()}</div>
-      <Title>{notepad.title}</Title>
-      <p className="mb-4 text-gray-500">{notepad.subtitle}</p>
-      <p>{notepad.content}</p>
+      <span className="text-gray-400 mb-2">#{post.id}</span>
+      <div>{new Date(post.created_at).toLocaleDateString()}</div>
+      <p>{post.content}</p>
     </Card>
   );
 }

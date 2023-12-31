@@ -4,7 +4,7 @@ import { FaSpinner } from "react-icons/fa";
 import { api } from "../api";
 import { Card } from "../components/Card";
 
-interface Notepad {
+interface Post {
   id: 0;
   title: "";
   subtitle: "";
@@ -12,28 +12,28 @@ interface Notepad {
   created_at: ""; // Ou ajuste para o tipo de data apropriado
 }
 
-const initialNotepads: Notepad[] = [];
+const initialPosts: Post[] = [];
 const initialLoading = true;
 
 export function HomeRoute() {
-  const [notepads, setNotepads] = useState(initialNotepads);
+  const [posts, setPosts] = useState(initialPosts);
   const [loading, setLoading] = useState(initialLoading);
 
-  async function loadNotepads() {
-    const response = await api.get("/notepads");
-    const nextNotepads = response.data.notepads;
-    setNotepads(nextNotepads);
+  async function loadPosts() {
+    const response = await api.get("/posts");
+    const nextPosts = response.data.posts;
+    setPosts(nextPosts);
   }
 
   useEffect(() => {
-    loadNotepads();
+    loadPosts();
   }, []);
 
   useEffect(() => {
-    if (notepads.length > 0) {
+    if (posts.length > 0) {
       setLoading(false);
     }
-  }, [notepads]);
+  }, [posts]);
 
   return (
     <>
@@ -42,21 +42,18 @@ export function HomeRoute() {
           <FaSpinner className="text -4xl animate-spin" />
         </div>
       )}
-      {notepads.map((notepad) => {
+      {posts.map((post) => {
         return (
           <Card>
             <Link
-              to={`/ver-notepad/${notepad.id}`}
-              key={notepad.id}
+              to={`/ver-publicacao/${post.id}`}
+              key={post.id}
               className="border-b py-2 cursor-pointer block"
             >
               <span className="text-sm text-gray-500">
-                {new Date(notepad.created_at).toLocaleDateString()}
+                {new Date(post.created_at).toLocaleDateString()}
               </span>
-              <h2 className="text-lg font-bold leading-tight pb-2">
-                {notepad.title}
-              </h2>
-              <p>{notepad.subtitle}</p>
+              <p>{post.content}</p>
             </Link>
           </Card>
         );
