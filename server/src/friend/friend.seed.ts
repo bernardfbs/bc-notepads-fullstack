@@ -1,14 +1,15 @@
 import { UserRepository } from "../user/user.repository";
 
 const minFriendsCount = 1;
-const friendsRange = 3;
+const friendsRange = 4;
 
 async function seedFriend() {
-  console.log("Iniciando seeding...");
   const userRepository = new UserRepository();
+
+  console.log("Iniciando seeding...");
   const users = await userRepository.listUsers();
   const usersId = users.map((user) => user.id);
-  let friendships: any[] = []; // { userA: 1, userB: 2 }
+  let friendships: Array<{ userA: number; userB: number }> = []; // { userA: 1, userB: 2 }
 
   for (const id of usersId) {
     const friendsCount =
@@ -25,7 +26,6 @@ async function seedFriend() {
             (friend.userA === randomId && friend.userB === id)
         )
       );
-
       friendships.push({
         userA: id,
         userB: randomId,

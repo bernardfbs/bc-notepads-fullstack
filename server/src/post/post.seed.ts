@@ -4,11 +4,12 @@ import { faker } from "@faker-js/faker";
 
 const defaultLimit = 20;
 const minCommentCount = 1;
-const commentRange = 3;
+const commentRange = 4;
+
+const userRepository = new UserRepository();
+const postRepository = new PostRepository();
 
 async function postSeed() {
-  const userRepository = new UserRepository();
-  const postRepository = new PostRepository();
   const users = await userRepository.listUsers();
   const usersIds = users.map((user) => user.id);
 
@@ -26,7 +27,6 @@ async function postSeed() {
 }
 
 async function commentSeed(post, usersIds) {
-  const postRepository = new PostRepository();
   const commentCount =
     minCommentCount + Math.round(Math.random() * commentRange);
   for (let index = 0; index < commentCount; index++) {
@@ -46,16 +46,13 @@ function generatePost(user_id) {
     content: faker.lorem.words(5 + Math.round(Math.random() * 5)),
   };
 }
-
 function generateComment(user_id) {
   return {
     user_id,
     message: faker.lorem.words(2 + Math.round(Math.random() * 3)),
   };
 }
-
 function getRandomUserId(usersId) {
   return usersId[Math.floor(Math.random() * usersId.length)];
 }
-
 postSeed();

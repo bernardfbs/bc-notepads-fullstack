@@ -3,6 +3,7 @@ import { DarkModeToggle } from "./DarkModeToggle";
 import { BiAddToQueue as LogoNewNotepad } from "react-icons/bi";
 import { AiOutlineHome as LogoHome } from "react-icons/ai";
 import { AiOutlineFileText as LogoList } from "react-icons/ai";
+import { AiOutlineLogin } from "react-icons/ai";
 
 export function AppBar() {
   return (
@@ -19,6 +20,9 @@ export function AppBar() {
       </div>
       <Link to="/home-post">
         <LogoList className="text-4xl"></LogoList>
+      </Link>
+      <Link to="/entrar">
+        <AiOutlineLogin className="text-4xl"></AiOutlineLogin>
       </Link>
       <DarkModeToggle></DarkModeToggle>
     </header>

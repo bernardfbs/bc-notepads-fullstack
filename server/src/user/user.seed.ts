@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { UserRepository } from "./user.repository";
 
-const defaultLimit = 50;
+const defaultLimit = 10;
 
 async function seedUser() {
   const userRepository = new UserRepository();
@@ -21,7 +21,8 @@ function generateUser() {
     first_name: faker.person.firstName(),
     last_name: faker.person.lastName(),
     avatar: faker.internet.avatar(),
-    passwd: faker.internet.password(),
+    password: faker.internet.password(),
+    email: faker.internet.email(),
   };
 }
 
