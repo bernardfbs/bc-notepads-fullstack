@@ -15,7 +15,7 @@ async function seedFriend() {
     const friendsCount =
     minFriendsCount + Math.round(Math.random() * friendsRange);
     for (let index = 0; index < friendsCount; index++) {
-      let randomId;
+      let randomId: number;
       do {
         randomId = usersId[Math.floor(Math.random() * usersId.length)];
       } while (

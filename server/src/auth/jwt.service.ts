@@ -1,4 +1,5 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
+export { TokenExpiredError } from "jsonwebtoken";
 import type { Request } from "express";
 
 export class JwtService {
@@ -14,8 +15,9 @@ export class JwtService {
   private jwtSecret: string;
 
   encode(payload: Object) {
-    const token = jwt.sign(payload, this.jwtSecret);
-    return token;
+    const token = jwt.sign(payload, this.jwtSecret, {
+      expiresIn: "7d",
+    });
   }
 
   decode(token: string) {
