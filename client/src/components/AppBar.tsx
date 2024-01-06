@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-simple-toasts";
 import { DarkModeToggle } from "./DarkModeToggle";
+import { FaSpinner } from "react-icons/fa";
+import { globalNavigate } from "../globalNavigate";
 import { BiAddToQueue as LogoNewNotepad } from "react-icons/bi";
 import { AiOutlineHome as LogoHome } from "react-icons/ai";
 import { AiOutlineFileText as LogoList } from "react-icons/ai";
@@ -10,11 +13,18 @@ import { useGlobalStore } from "../useGlobalStore";
 import { TokenStorage } from "../tokenStorage";
 
 export function AppBar() {
-  const navigate = useNavigate();
   const user = useGlobalStore((state) => state.user);
   const setUser = useGlobalStore((state) => state.setUser);
   const setIsAuthorized = useGlobalStore((state) => state.setIsAuthorized);
   const isAuthorized = useGlobalStore((state) => state.isAuthorized);
+
+  const isLoading = useGlobalStore((state) => state.isLoading);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    globalNavigate.navigate = navigate;
+  }, [navigate]);
 
   function logout() {
     TokenStorage.removeToken();
@@ -45,6 +55,7 @@ export function AppBar() {
         <Link to="/entrar" className="text-4xl">
           <AiOutlineLogin />
         </Link>
+        {isLoading && <FaSpinner className="animate-spin text-2xl" />}
       </div>
       <div className="flex items-center gap-4">
         {isAuthorized ? (
@@ -52,12 +63,19 @@ export function AppBar() {
             <Button onClick={logout}>Sair</Button>
             <Link to="/usuario" className="flex items-center gap-2">
               {user.first_name} {user.last_name}
-              <img src={user.avatar} className="w-12 h-12 rounded-full" alt={`${user.first_name} Avatar`} />
+              <img
+                src={user.avatar}
+                className="w-12 h-12 rounded-full"
+                alt={`${user.first_name} Avatar`}
+              />
             </Link>
           </>
         ) : (
           <div className="flex items-center gap-4">
-            <Link to="/criar-conta" className="text-4xl"><MdSwitchAccount /></Link>        </div>
+            <Link to="/criar-conta" className="text-4xl">
+              <MdSwitchAccount />
+            </Link>{" "}
+          </div>
         )}
         <DarkModeToggle />
       </div>
