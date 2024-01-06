@@ -12,5 +12,7 @@ export function FormLandingPage() {
       </p>
       <BiNotepad className="text-8xl"></BiNotepad>
     </div>
+
+    
   );
 }

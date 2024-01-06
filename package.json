@@ -1,5 +1,9 @@
 {
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.4",
     "prisma": "^5.7.1"
+  },
+  "dependencies": {
+    "zustand": "^4.4.7"
   }
 }
